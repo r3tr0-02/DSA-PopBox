@@ -15,9 +15,26 @@
     ! - need help
     ? - question
 
-    TODO :
-    TODO :
-    TODO :
+    TITLE : POPBOX SYSTEM
+   
+    <0. SYSTEM>
+    TODO : Create Linked List with 25 nodes
+    TODO : Struct{Box Number(int), Parcel ID(string), Phone Number(string), PIN number(int), Next(*pointer)}
+    TODO : Random Number Generator for PIN 
+
+    <1. DEPOSIT PARCEL>
+    TODO : When add parcel, system check from 1 until 25. If empty, fill that node. If reach NULL, terminate insertion.
+    TODO : Get input -> Parcel ID, Phone Number
+    TODO : If add parcel success, "notify" the owner of parcel
+
+    <2.RETRIEVE PARCEL>
+    TODO : When retrieve parcel, choose the box number
+    TODO : Insert PIN Number (if wrong pin, reenter, max attempt 3 times, terminate)
+    TODO : After retrive, clear the data of that node
+
+    <3. DEBUG MODE>
+    TODO : See all the box content
+    TODO : Pick between show all box include empty box AND only non-empty box
 */
 
 int main()
