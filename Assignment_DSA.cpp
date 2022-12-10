@@ -9,7 +9,7 @@
 | Date Created : 7/12/2022                                                     |
 *******************************************************************************/
 #include <iostream>
-
+using namespace std;
 /*
     // - done
     ! - need help
@@ -36,6 +36,27 @@
     TODO : See all the box content
     TODO : Pick between show all box include empty box AND only non-empty box
 */
+class Deposite_parcel{
+	private:
+		string parcelID[25];
+		string phonenumber[25];
+		int Posinput;
+		
+	public:
+		void add_parcel(void);
+		void delete_parcel(void);
+		void debug_machine(void)
+		
+};
+
+void Deposite_parcel :: add_parcel(){
+	cout << "Please enter Student's Parcel ID : " << endl;
+    cin >> parcelID;
+    
+    cout << "Please Enter student's Phone number :" <<endl;
+    
+    
+}
 
 int main()
 {
