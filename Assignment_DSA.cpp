@@ -77,6 +77,6 @@ void displayLocker(Parcel* n){
 int main()
 {
     Parcel *cendi_head = NULL,*cendi_tail = NULL;
-    display(cendi_head);
+    displayLocker(cendi_head);
     return 0;
 }
