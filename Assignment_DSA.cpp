@@ -165,7 +165,29 @@ void displayLocker(Parcel* n){
         << endl;
         n=n->next;
     }
+    cout << "\n=====END OF LOCKER=====";
 }
+
+void displayLockerEx(Parcel* n){
+    cout << "==========LOCKER_EX==========";
+    while(n!=NULL){
+        if(n->parcel_id==""){
+            n = n->next;
+        }else{
+            cout
+            << "====================" << endl
+            << "Locker id : "<< n->locker_id << endl
+            << "Parcel id : "<< n->parcel_id << endl
+            << "Phone : "<< n->phone << endl
+            << "Pin : "<< n->pin << endl
+            << endl;
+            n=n->next;
+        }
+    }
+
+    cout << "\n=====END OF LOCKER=====";
+}
+
 
 int main()
 {  
@@ -189,7 +211,24 @@ int main()
             cout <<endl << endl;
             break;
         case 3:
-            displayLocker(cendi_head);
+            cout << "\nDebug Mode :";
+            cout << "\n1. Show all locker";
+            cout << "\n2. Show all locker (excluding empty)";
+            cout << "\nYour input: ";
+            cin >> input;
+
+            switch(input){
+            case 1:
+                displayLocker(cendi_head);
+                break;
+            case 2:
+                displayLockerEx(cendi_head);
+                break;
+            default:
+                cout << "Wrong number" << endl << endl;
+                break;
+            }
+            break;
         default:
             cout << "Wrong number" << endl << endl;
             break;
