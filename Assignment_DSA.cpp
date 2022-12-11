@@ -9,6 +9,8 @@
 | Date Created : 7/12/2022                                                     |
 *******************************************************************************/
 #include <iostream>
+#include <iomanip>
+
 using namespace std;
 /*
     // - done
@@ -44,6 +46,30 @@ struct Parcel{
     Parcel *next;
 };
 
+void header(){
+    cout<< setfill('-') << left << setw(34) << "|" <<"|" <<endl;
+    cout << setfill(' ') << setw(34) << "| UNITEN PARCEL MAILBOX SYSTEM" << "|"<< endl;
+    cout<< setfill('-') << left << setw(34) << "|" <<"|" <<endl;
+    for(int i=0;i<5;i++){
+        switch(i){
+            case 1:
+                cout<< setfill(' ') << left << setw(34) << "| 1. Deposit Parcel" << "|"<<endl;
+                break;
+
+            case 2:
+                cout<< setfill(' ') << left << setw(34) << "| 2. Retrieve Parcel" << "|"<<endl;
+                break;
+            case 3:
+                cout<< setfill(' ') << left << setw(34) << "| 3. Debug" << "|"<<endl;
+                break;
+            default:
+                    cout<< setfill(' ') << left << setw(34) << "|" <<"|" <<endl;
+                    break;
+        }
+    }
+    cout<< setfill('-') << left << setw(34) << "|" <<"|" <<endl;
+}
+
 void createLocker(Parcel **head,Parcel **tail, int s){
     for(int i =1;i<=25;i++){
         Parcel* n = new Parcel;
@@ -62,7 +88,74 @@ void createLocker(Parcel **head,Parcel **tail, int s){
     }
 }
 
+void depositParcel(Parcel** head){
+    string id,phone;
+    srand((unsigned) time(NULL));
+
+    cout << "Insert Parcel ID : ";
+    cin >> id;
+    cout << "Insert Phone Number : ";
+    cin >> phone;
+
+    Parcel* n = *head;
+
+    //do{
+        //random_ping = rand()%9999;
+        //string ran_id = id+to_string(ran);
+        //string ran_phone = phone+to_string(ran);
+        //core part
+        while(n!=NULL){
+            if(n->parcel_id==""){
+                n->parcel_id = id;
+                n->phone = phone;
+                n->pin = rand()%9999;
+                cout << "Parcel successfully deposit to locker "<< n->locker_id <<" !"<<endl;
+                break;
+            }else{
+                n = n->next;
+            }
+        }
+        //end core
+    //}while(n!=NULL);
+
+    if(n==NULL){
+        cout << "Locker full!";
+    }
+}
+
+void retrieveParcel(Parcel **head){
+    string phone;
+    Parcel* n = *head;
+    int pin;
+
+    cout << "Enter phone number : ";
+    cin >> phone;
+
+    while(n!=NULL){
+        if(n->phone==phone){
+                cout << "Enter the pin for locker "<< n->locker_id <<" : ";
+                cin >> pin;
+                if(pin != n->pin){
+                    cout << "Wrong pin!" << endl;
+                }else{
+                    cout << "Pin correct! Please remove the parcel from the locker." << endl;
+                    n->parcel_id = "";
+                    n->phone = "";
+                    n->pin = NULL;
+                }
+                break;
+            }else{
+                n = n->next;
+            }
+    }
+
+    if(n==NULL){
+        cout << "Phone number doesn't exist!" << endl;
+    }
+}
+
 void displayLocker(Parcel* n){
+    cout << "==========LOCKER==========";
     while(n!=NULL){
         cout
         << "Locker id : "<< n->locker_id << endl
@@ -75,8 +168,34 @@ void displayLocker(Parcel* n){
 }
 
 int main()
-{
+{  
     Parcel *cendi_head = NULL,*cendi_tail = NULL;
-    displayLocker(cendi_head);
+    createLocker(&cendi_head,&cendi_tail,10000);
+    int input;
+
+    do{
+        header();
+        cout << endl;
+        cout << "Your input: ";
+        cin >> input;
+
+        switch(input){
+        case 1:
+            depositParcel(&cendi_head);
+            cout <<endl << endl;
+            break;
+        case 2:
+            retrieveParcel(&cendi_head);
+            cout <<endl << endl;
+            break;
+        case 3:
+            displayLocker(cendi_head);
+        default:
+            cout << "Wrong number" << endl << endl;
+            break;
+        }
+    }while(true);
+
+
     return 0;
 }
