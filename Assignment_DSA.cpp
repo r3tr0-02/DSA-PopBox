@@ -36,29 +36,47 @@ using namespace std;
     TODO : See all the box content
     TODO : Pick between show all box include empty box AND only non-empty box
 */
-class Deposite_parcel{
-	private:
-		string parcelID[25];
-		string phonenumber[25];
-		int Posinput;
-		
-	public:
-		void add_parcel(void);
-		void delete_parcel(void);
-		void debug_machine(void)
-		
+struct Parcel{
+    int locker_id;
+    string parcel_id;
+    string phone;
+    int pin;
+    Parcel *next;
 };
 
-void Deposite_parcel :: add_parcel(){
-	cout << "Please enter Student's Parcel ID : " << endl;
-    cin >> parcelID;
-    
-    cout << "Please Enter student's Phone number :" <<endl;
-    
-    
+void createLocker(Parcel **head,Parcel **tail, int s){
+    for(int i =1;i<=25;i++){
+        Parcel* n = new Parcel;
+        n->locker_id = s+i;
+        n->parcel_id = "";
+        n->phone = "";
+        n->pin = NULL;
+        n->next = NULL;
+
+        if(*head==NULL){
+            *head = *tail = n;
+        }else{
+            (*tail)->next = n;
+            *tail = n;
+        }
+    }
+}
+
+void displayLocker(Parcel* n){
+    while(n!=NULL){
+        cout
+        << "Locker id : "<< n->locker_id << endl
+        << "Parcel id : "<< n->parcel_id << endl
+        << "Phone : "<< n->phone << endl
+        << "Pin : "<< n->pin << endl
+        << endl;
+        n=n->next;
+    }
 }
 
 int main()
 {
+    Parcel *cendi_head = NULL,*cendi_tail = NULL;
+    display(cendi_head);
     return 0;
 }
