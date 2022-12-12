@@ -49,6 +49,29 @@ struct Parcel{
     Parcel *prev;
 };
 
+void lockerImage(){
+    int number = 1;
+
+    for(int k=0;k<5;k++){ //do this for 5 row
+        for(int j=1;j<=3;j++){ //create each column
+            if(j%2==1){ // the frame
+                for(int i=0;i<5;i++){
+                cout<< setfill('-') << left << setw(6) << "|" <<"|";
+                }
+            }else{ // the inside with number labeling
+                for(int i=0;i<5;i++){
+                    if(number<10){
+                        cout<< setfill(' ') << left << setw(3) << "|" << number++ <<right << setw(3) <<"|";
+                    }else{
+                        cout<< setfill(' ') << left << setw(2) << "|" << number++ <<right << setw(3) <<"|";
+                    }
+                }
+            }
+        cout <<endl;
+        }
+    }
+}
+
 void header(){
     cout<< setfill('-') << left << setw(34) << "|" <<"|" <<endl;
     cout << setfill(' ') << setw(34) << "| UNITEN PARCEL MAILBOX SYSTEM" << "|"<< endl;
@@ -78,7 +101,7 @@ void header(){
 void createLocker(Parcel **head,Parcel **tail, int s){
     for(int i =1;i<=25;i++){
         Parcel* n = new Parcel;
-        n->locker_id = s+i;
+        n->locker_id = s + i;
         n->parcel_id = "";
         n->phone = "";
         n->pin = 0;
@@ -96,7 +119,6 @@ void createLocker(Parcel **head,Parcel **tail, int s){
 }
 
 int pinGenerator(){
-    srand((unsigned) time(NULL));
     return 1000+rand()%8999;
 }
 
@@ -117,6 +139,7 @@ void depositParcel(Parcel** head){
             n->phone = phone;
             n->pin = pinGenerator();
             cout << "Parcel successfully deposit to locker "<< n->locker_id <<"!"<<endl;
+            cout << "Locker pin : " << n->pin << endl;        
             break;
         }else{
             n = n->next;
@@ -195,8 +218,8 @@ void find_parcel(Parcel* n){
     string string_input;
 
     cout << "\nFind parcel using?" << endl
-         << "\n1. Phone Number" << endl
-         << "\n2. Parcel ID" << endl
+         << "1. Phone Number" << endl
+         << "2. Parcel ID" << endl
          << "\nYour input: ";
     cin >> input;
 
@@ -249,8 +272,8 @@ void updateParcel(Parcel** head){
     Parcel* n = *head;
 
     cout << "\nMethod to find parcel" << endl
-         << "1. Phone Number"
-         << "2. Parcel ID"
+         << "1. Phone Number" << endl
+         << "2. Parcel ID" << endl
          << "Your input: ";
     cin >> input;
 
@@ -344,14 +367,44 @@ void updateParcel(Parcel** head){
     }
 }
 
+void autoFill(Parcel** head){
+    string id = "SPXMY000";
+    string phone = "018-000";
+
+    Parcel* n = *head;
+
+    do{
+        string new_id = id+to_string(pinGenerator());
+        string new_phone = phone+to_string(pinGenerator());
+        //core part
+        while(n!=NULL){
+            if(n->parcel_id==""){
+                n->parcel_id = new_id;
+                n->phone = new_phone;
+                n->pin = pinGenerator();
+                break;
+            }else{
+                n = n->next;
+            }
+        }
+        //end core
+    }while(n!=NULL);
+
+    if(n==NULL){
+        cout << "\n!!!!!!!!!!Auto Fill Complete!!!!!!!!!!" << endl;
+    }
+}
+
 int main()
 {  
     Parcel *cendi_head = NULL,*cendi_tail = NULL;
-    createLocker(&cendi_head,&cendi_tail,10000);
+    createLocker(&cendi_head,&cendi_tail,0);
     int input;
+    srand(time(NULL));
 
     do{
         cout << endl;
+        lockerImage();
         header();
         cout << endl;
         cout << "Your input: ";
@@ -371,6 +424,8 @@ int main()
             cout << "\n1. Show all locker";
             cout << "\n2. Show all locker (excluding empty)";
             cout << "\n3. Find parcel";
+            cout << "\n4. Update parcel information";
+            cout << "\n9. Random Generate all Locker Information";
             cout << "\nYour input: ";
             cin >> input;
 
@@ -383,6 +438,12 @@ int main()
                 break;
             case 3:
                 find_parcel(cendi_head);
+                break;
+            case 4:
+                updateParcel(&cendi_head);
+                break;
+            case 9:
+                autoFill(&cendi_head);
                 break;
             default:
                 cout << "Wrong number" << endl << endl;
