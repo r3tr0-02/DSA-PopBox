@@ -120,8 +120,8 @@ void createLocker(Parcel **head,Parcel **tail, int s){
     }
 }
 
-int pinGenerator(){
-    return 1000+rand()%8999;
+int pinGenerator(int min,int max){
+    return min+rand()%max;
 }
 
 class PhoneValidator
@@ -148,6 +148,7 @@ void depositParcel(Parcel** head){
     cout << "Insert Parcel ID : ";
     cin >> id;
     do{
+        cin.ignore();
         cout << "Insert Phone Number (example : +6013456789): ";
         getline(cin, phone);
         if (validator.isValid(phone))
@@ -170,7 +171,7 @@ void depositParcel(Parcel** head){
         if(n->parcel_id==""){
             n->parcel_id = id;
             n->phone = phone;
-            n->pin = pinGenerator();
+            n->pin = pinGenerator(1000,8999);
             cout << "Parcel successfully deposit to locker "<< n->locker_id <<"!"<<endl;
             cout << "Locker pin : " << n->pin << endl;        
             break;
@@ -184,12 +185,14 @@ void depositParcel(Parcel** head){
     }
 }
 
+
+//!!PIN VALIDATION
 void retrieveParcel(Parcel **head){
     string phone;
     Parcel* n = *head;
     int pin;
 
-    cout << "Enter Phone Number (example : 012-3456789): ";
+    cout << "Insert Phone Number (example : +6013456789): ";
     cin >> phone;
 
 
@@ -402,20 +405,20 @@ void updateParcel(Parcel** head){
 }
 
 void autoFill(Parcel** head){
-    string id = "SPXMY000";
+    string id[5] = {"SPXMY000","CBQMY000","TSXMY000","POPMY000","HUIMY000"};
     string phone = "+6018010";
 
     Parcel* n = *head;
 
     do{
-        string new_id = id+to_string(pinGenerator());
-        string new_phone = phone+to_string(pinGenerator());
+        string new_id = id[pinGenerator(0,5)]+to_string(pinGenerator(1000,8999));
+        string new_phone = phone+to_string(pinGenerator(1000,8999));
         //core part
         while(n!=NULL){
             if(n->parcel_id==""){
                 n->parcel_id = new_id;
                 n->phone = new_phone;
-                n->pin = pinGenerator();
+                n->pin = pinGenerator(1000,8999);
                 break;
             }else{
                 n = n->next;
