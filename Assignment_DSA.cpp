@@ -405,7 +405,7 @@ void updateParcel(Parcel** head){
 }
 
 void autoFill(Parcel** head){
-    string id[5] = {"SPXMY000","CBQMY000","TSXMY000","POPMY000","HUIMY000"};
+    string id[5] = {"SPXMY000","SPE000","TSXMY000","POPMY000","HUIMY000,000000,PL000, MY0000, DHLMY000"};
     string phone = "+6018010";
 
     Parcel* n = *head;
