@@ -9,9 +9,9 @@
 | Date Created : 7/12/2022                                                     |
 *******************************************************************************/
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
 #include <iomanip>
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
 
 using namespace std;
 /*
@@ -22,23 +22,23 @@ using namespace std;
     TITLE : POPBOX SYSTEM
    
     <0. SYSTEM>
-    TODO : Create Linked List with 25 nodes
-    TODO : Struct{Box Number(int), Parcel ID(string), Phone Number(string), PIN number(int), Next(*pointer)}
-    TODO : Random Number Generator for PIN 
+    // : Create Linked List with 25 nodes
+    // : Struct{Box Number(int), Parcel ID(string), Phone Number(string), PIN number(int), Next(*pointer)}
+    // : Random Number Generator for PIN 
 
     <1. DEPOSIT PARCEL>
-    TODO : When add parcel, system check from 1 until 25. If empty, fill that node. If reach NULL, terminate insertion.
-    TODO : Get input -> Parcel ID, Phone Number
+    // : When add parcel, system check from 1 until 25. If empty, fill that node. If reach NULL, terminate insertion.
+    // : Get input -> Parcel ID, Phone Number
     TODO : If add parcel success, "notify" the owner of parcel
 
     <2.RETRIEVE PARCEL>
-    TODO : When retrieve parcel, choose the box number
-    TODO : Insert PIN Number (if wrong pin, reenter, max attempt 3 times, terminate)
-    TODO : After retrive, clear the data of that node
+    // : When retrieve parcel, choose the box number
+    // : Insert PIN Number (if wrong pin, reenter, max attempt 3 times, terminate)
+    // : After retrive, clear the data of that node
 
     <3. DEBUG MODE>
-    TODO : See all the box content
-    TODO : Pick between show all box include empty box AND only non-empty box
+    // : See all the box content
+    // : Pick between show all box include empty box AND only non-empty box
 */
 struct Parcel{
     int locker_id;
@@ -46,23 +46,26 @@ struct Parcel{
     string phone;
     int pin;
     Parcel *next;
+    Parcel *prev;
 };
 
 void header(){
     cout<< setfill('-') << left << setw(34) << "|" <<"|" <<endl;
     cout << setfill(' ') << setw(34) << "| UNITEN PARCEL MAILBOX SYSTEM" << "|"<< endl;
     cout<< setfill('-') << left << setw(34) << "|" <<"|" <<endl;
-    for(int i=0;i<5;i++){
+    for(int i=0;i<6;i++){
         switch(i){
             case 1:
                 cout<< setfill(' ') << left << setw(34) << "| 1. Deposit Parcel" << "|"<<endl;
                 break;
-
             case 2:
                 cout<< setfill(' ') << left << setw(34) << "| 2. Retrieve Parcel" << "|"<<endl;
                 break;
             case 3:
                 cout<< setfill(' ') << left << setw(34) << "| 3. Debug" << "|"<<endl;
+                break;
+            case 4:
+                cout<< setfill(' ') << left << setw(34) << "| 0. Exit" << "|"<<endl;
                 break;
             default:
                     cout<< setfill(' ') << left << setw(34) << "|" <<"|" <<endl;
@@ -75,51 +78,50 @@ void header(){
 void createLocker(Parcel **head,Parcel **tail, int s){
     for(int i =1;i<=25;i++){
         Parcel* n = new Parcel;
-        n->locker_id = s + i;
+        n->locker_id = s+i;
         n->parcel_id = "";
         n->phone = "";
-        n->pin = NULL;
+        n->pin = 0;
         n->next = NULL;
+        n->prev = NULL;
 
         if(*head==NULL){
             *head = *tail = n;
         }else{
             (*tail)->next = n;
+            n->prev = *tail;
             *tail = n;
         }
     }
 }
 
+int pinGenerator(){
+    srand((unsigned) time(NULL));
+    return 1000+rand()%8999;
+}
+
 void depositParcel(Parcel** head){
     string id,phone;
-    srand((unsigned) time(NULL));
+    
 
     cout << "Insert Parcel ID : ";
     cin >> id;
-    cout << "Insert Phone Number : ";
+    cout << "Insert Phone Number (example : 012-3456789): ";
     cin >> phone;
 
     Parcel* n = *head;
 
-    //do{
-        //random_ping = rand()%9999;
-        //string ran_id = id+to_string(ran);
-        //string ran_phone = phone+to_string(ran);
-        //core part
-        while(n!=NULL){
-            if(n->parcel_id==""){
-                n->parcel_id = id;
-                n->phone = phone;
-                n->pin = rand()%9999;
-                cout << "Parcel successfully deposit to locker "<< n->locker_id <<" !"<<endl;
-                cout << "Locker pin : " << n->pin << endl;
-                break;
-            }else{
-                n = n->next;
-            }
+    while(n!=NULL){
+        if(n->parcel_id==""){
+            n->parcel_id = id;
+            n->phone = phone;
+            n->pin = pinGenerator();
+            cout << "Parcel successfully deposit to locker "<< n->locker_id <<"!"<<endl;
+            break;
+        }else{
+            n = n->next;
         }
-        //end core
-    //}while(n!=NULL);
+    }
 
     if(n==NULL){
         cout << "Locker full!";
@@ -131,7 +133,7 @@ void retrieveParcel(Parcel **head){
     Parcel* n = *head;
     int pin;
 
-    cout << "Enter phone number : ";
+    cout << "Enter Phone Number (example : 012-3456789): ";
     cin >> phone;
 
     while(n!=NULL){
@@ -144,7 +146,7 @@ void retrieveParcel(Parcel **head){
                     cout << "Pin correct! Please remove the parcel from the locker." << endl;
                     n->parcel_id = "";
                     n->phone = "";
-                    n->pin = NULL;
+                    n->pin = 0;
                 }
                 break;
             }else{
@@ -157,48 +159,199 @@ void retrieveParcel(Parcel **head){
     }
 }
 
-void displayLocker(Parcel* n){
-    cout << "==========LOCKER==========";
-    while(n!=NULL){
-        cout
-        << "Locker id : "<< n->locker_id << endl
-        << "Parcel id : "<< n->parcel_id << endl
-        << "Phone : "<< n->phone << endl
-        << "Pin : "<< n->pin << endl
-        << endl;
-        n=n->next;
-    }
-    cout << "\n=====END OF LOCKER=====";
+void displaySingleLocker(Parcel *n){
+    cout
+    << "Locker id : "<< n->locker_id << endl
+    << "Parcel id : "<< n->parcel_id << endl
+    << "Phone : "<< n->phone << endl
+    << "Pin : "<< n->pin << endl
+    << "====================" << endl;
 }
 
-void displayLockerEx(Parcel* n){
-    cout << "==========LOCKER_EX==========";
+void displayAllLocker(Parcel* n){
+    cout << "==========LOCKER==========" << endl;
+    while(n!=NULL){
+        displaySingleLocker(n);
+        n=n->next;
+    }
+    cout << "\n=====END OF LOCKER=====" << endl;
+}
+
+void displayAllLockerEx(Parcel* n){
+    cout << "==========LOCKER_EX==========" <<endl;
     while(n!=NULL){
         if(n->parcel_id==""){
             n = n->next;
         }else{
-            cout
-            << "====================" << endl
-            << "Locker id : "<< n->locker_id << endl
-            << "Parcel id : "<< n->parcel_id << endl
-            << "Phone : "<< n->phone << endl
-            << "Pin : "<< n->pin << endl
-            << endl;
+            displaySingleLocker(n);
             n=n->next;
         }
     }
-
-    cout << "\n=====END OF LOCKER=====";
+    cout << "\n=====END OF LOCKER=====" << endl;
 }
 
+void find_parcel(Parcel* n){
+    int input;
+    string string_input;
+
+    cout << "\nFind parcel using?" << endl
+         << "\n1. Phone Number" << endl
+         << "\n2. Parcel ID" << endl
+         << "\nYour input: ";
+    cin >> input;
+
+    switch (input)
+    {
+    case 1:
+        cout << "\nInsert Phone Number (example : 012-3456789) : ";
+        cin >> string_input; 
+
+        while(n!=NULL){
+            if(n->phone!=string_input){
+                n = n->next;
+            }else{
+                displaySingleLocker(n);
+                break;
+            }
+        }
+
+        if(n==NULL){
+            cout << "No phone number matched!" << endl;
+        }
+        break;
+    case 2:
+        cout << "\nInsert Parcel ID : ";
+        cin >> string_input; 
+
+        while(n!=NULL){
+            if(n->parcel_id!=string_input){
+                n = n->next;
+            }else{
+                displaySingleLocker(n);
+                break;
+            }
+        }
+
+        if(n==NULL){
+            cout << "No Parcel ID matched!" << endl;
+        }
+
+        break;
+    default:
+        break;
+    }
+
+}
+
+void updateParcel(Parcel** head){
+    int input;
+    string string_input;
+    Parcel* n = *head;
+
+    cout << "\nMethod to find parcel" << endl
+         << "1. Phone Number"
+         << "2. Parcel ID"
+         << "Your input: ";
+    cin >> input;
+
+    switch (input)
+    {
+    case 1:
+        cout << "\nInsert Phone Number (example,012-3456789): ";
+        cin >> string_input;
+
+        while(n!=NULL){
+            if(n->phone!=string_input){
+                n = n->next;
+            }else{
+                displaySingleLocker(n);
+
+                cout << "\nWhat to edit" << endl
+                     << "1. Phone Number"
+                     << "2. Parcel ID"
+                     << "Your input: ";
+                cin >> input;
+
+                switch(input)
+                {
+                case 1:
+                    cout << "\nInsert New Phone Number (example : 012-3456789): ";
+                    cin >> string_input;
+                    n->phone = string_input;
+                    cout << "\nPhone Number updated!";
+                    break;
+                case 2:
+                    cout << "\nInsert New Parcel ID: ";
+                    cin >> string_input;
+                    n->parcel_id = string_input;
+                    cout << "\nParcel ID updated!";
+                    break;
+                default:
+                    break;
+                }
+
+            }
+        }
+
+        if(n==NULL){
+            cout << "No phone number matched!" << endl;
+        }
+        break;
+
+    case 2:
+        cout << "\nInsert Parcel ID : ";
+        cin >> string_input;
+
+        while(n!=NULL){
+            if(n->parcel_id!=string_input){
+                n = n->next;
+            }else{
+                displaySingleLocker(n);
+                cout << "\nWhat to edit" << endl
+                     << "1. Phone Number"
+                     << "2. Parcel ID"
+                     << "Your input: ";
+                cin >> input;
+
+                 switch(input)
+                {
+                case 1:
+                    cout << "\nInsert New Phone Number (example : 012-3456789): ";
+                    cin >> string_input;
+                    n->phone = string_input;
+                    cout << "\nPhone Number updated!";
+                    break;
+                case 2:
+                    cout << "\nInsert New Parcel ID: ";
+                    cin >> string_input;
+                    n->parcel_id = string_input;
+                    cout << "\nParcel ID updated!";
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+
+        if(n==NULL){
+            cout << "No Parcel ID matched!" << endl;
+        }
+
+        break;
+
+    default:
+        break;
+    }
+}
 
 int main()
 {  
     Parcel *cendi_head = NULL,*cendi_tail = NULL;
-    createLocker(&cendi_head,&cendi_tail,0);
+    createLocker(&cendi_head,&cendi_tail,10000);
     int input;
 
     do{
+        cout << endl;
         header();
         cout << endl;
         cout << "Your input: ";
@@ -217,26 +370,32 @@ int main()
             cout << "\nDebug Mode :";
             cout << "\n1. Show all locker";
             cout << "\n2. Show all locker (excluding empty)";
+            cout << "\n3. Find parcel";
             cout << "\nYour input: ";
             cin >> input;
 
             switch(input){
             case 1:
-                displayLocker(cendi_head);
+                displayAllLocker(cendi_head);
                 break;
             case 2:
-                displayLockerEx(cendi_head);
+                displayAllLockerEx(cendi_head);
+                break;
+            case 3:
+                find_parcel(cendi_head);
                 break;
             default:
                 cout << "Wrong number" << endl << endl;
                 break;
             }
             break;
+        case 0:
+            break;
         default:
             cout << "Wrong number" << endl << endl;
             break;
         }
-    }while(true);
+    }while(input!=0);
 
 
     return 0;
