@@ -10,6 +10,8 @@
 *******************************************************************************/
 #include <iostream>
 #include <iomanip>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 
 using namespace std;
 /*
@@ -73,7 +75,7 @@ void header(){
 void createLocker(Parcel **head,Parcel **tail, int s){
     for(int i =1;i<=25;i++){
         Parcel* n = new Parcel;
-        n->locker_id = s+i;
+        n->locker_id = s + i;
         n->parcel_id = "";
         n->phone = "";
         n->pin = NULL;
@@ -110,6 +112,7 @@ void depositParcel(Parcel** head){
                 n->phone = phone;
                 n->pin = rand()%9999;
                 cout << "Parcel successfully deposit to locker "<< n->locker_id <<" !"<<endl;
+                cout << "Locker pin : " << n->pin << endl;
                 break;
             }else{
                 n = n->next;
@@ -192,7 +195,7 @@ void displayLockerEx(Parcel* n){
 int main()
 {  
     Parcel *cendi_head = NULL,*cendi_tail = NULL;
-    createLocker(&cendi_head,&cendi_tail,10000);
+    createLocker(&cendi_head,&cendi_tail,0);
     int input;
 
     do{
