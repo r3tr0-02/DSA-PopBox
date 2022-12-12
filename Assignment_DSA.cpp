@@ -147,17 +147,22 @@ void depositParcel(Parcel** head){
     
     cout << "Insert Parcel ID : ";
     cin >> id;
-    cout << "Insert Phone Number (example : +6013456789): ";
-    getline(cin, phone);
-    if (validator.isValid(phone))
-    {
-        cout << "Valid Malaysian phone number" << endl;
-    }
-    else
-    {
-        cout << "Invalid Malaysian phone number" << endl;
-    }
-  
+    do{
+        cout << "Insert Phone Number (example : +6013456789): ";
+        getline(cin, phone);
+        if (validator.isValid(phone))
+        {
+            cout << "Valid Malaysian phone number" << endl;
+            break;
+        }
+        else
+        {
+            cout << "Invalid Malaysian phone number" << endl;
+        }
+        cin.ignore();
+    }while(true);
+    
+    
 
     Parcel* n = *head;
 
@@ -398,7 +403,7 @@ void updateParcel(Parcel** head){
 
 void autoFill(Parcel** head){
     string id = "SPXMY000";
-    string phone = "018-000";
+    string phone = "+6018010";
 
     Parcel* n = *head;
 
