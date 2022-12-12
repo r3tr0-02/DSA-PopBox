@@ -13,6 +13,7 @@
 #include <time.h>
 #include <iomanip>
 #include <string>
+#include <regex>
 
 using namespace std;
 /*
@@ -123,14 +124,40 @@ int pinGenerator(){
     return 1000+rand()%8999;
 }
 
+class PhoneValidator
+{
+private:
+  regex phoneNumberRegex; // Regular expression for validating phone numbers
+
+public:
+  // Constructor
+  PhoneValidator() : phoneNumberRegex("^\\+?60[\\d]{9,10}$") {}
+
+  // Method to validate a phone number
+  bool isValid(string phone)
+  {
+    return regex_match(phone, phoneNumberRegex);
+  }
+};
+
+
 void depositParcel(Parcel** head){
     string id,phone;
+    PhoneValidator validator;
     
-
     cout << "Insert Parcel ID : ";
     cin >> id;
-    cout << "Insert Phone Number (example : 012-3456789): ";
-    cin >> phone;
+    cout << "Insert Phone Number (example : +6013456789): ";
+    getline(cin, phone);
+    if (validator.isValid(phone))
+    {
+        cout << "Valid Malaysian phone number" << endl;
+    }
+    else
+    {
+        cout << "Invalid Malaysian phone number" << endl;
+    }
+  
 
     Parcel* n = *head;
 
@@ -159,6 +186,7 @@ void retrieveParcel(Parcel **head){
 
     cout << "Enter Phone Number (example : 012-3456789): ";
     cin >> phone;
+
 
     while(n!=NULL){
         if(n->phone==phone){
@@ -289,13 +317,10 @@ void updateParcel(Parcel** head){
                 n = n->next;
             }else{
                 displaySingleLocker(n);
-            }
-        }
 
-        
                 cout << "\nWhat to edit" << endl
-                     << "1. Phone Number" <<endl
-                     << "2. Parcel ID" << endl
+                     << "1. Phone Number"
+                     << "2. Parcel ID"
                      << "Your input: ";
                 cin >> input;
 
@@ -316,6 +341,10 @@ void updateParcel(Parcel** head){
                 default:
                     break;
                 }
+
+            }
+        }
+
         if(n==NULL){
             cout << "No phone number matched!" << endl;
         }
@@ -331,8 +360,8 @@ void updateParcel(Parcel** head){
             }else{
                 displaySingleLocker(n);
                 cout << "\nWhat to edit" << endl
-                     << "1. Phone Number" << endl
-                     << "2. Parcel ID" << endl
+                     << "1. Phone Number"
+                     << "2. Parcel ID"
                      << "Your input: ";
                 cin >> input;
 
@@ -370,6 +399,7 @@ void updateParcel(Parcel** head){
 void autoFill(Parcel** head){
     string id = "SPXMY000";
     string phone = "018-000";
+
     Parcel* n = *head;
 
     do{
