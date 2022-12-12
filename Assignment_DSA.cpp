@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iomanip>
+#include <string>
 
 using namespace std;
 /*
@@ -288,10 +289,13 @@ void updateParcel(Parcel** head){
                 n = n->next;
             }else{
                 displaySingleLocker(n);
+            }
+        }
 
+        
                 cout << "\nWhat to edit" << endl
-                     << "1. Phone Number"
-                     << "2. Parcel ID"
+                     << "1. Phone Number" <<endl
+                     << "2. Parcel ID" << endl
                      << "Your input: ";
                 cin >> input;
 
@@ -312,10 +316,6 @@ void updateParcel(Parcel** head){
                 default:
                     break;
                 }
-
-            }
-        }
-
         if(n==NULL){
             cout << "No phone number matched!" << endl;
         }
@@ -331,8 +331,8 @@ void updateParcel(Parcel** head){
             }else{
                 displaySingleLocker(n);
                 cout << "\nWhat to edit" << endl
-                     << "1. Phone Number"
-                     << "2. Parcel ID"
+                     << "1. Phone Number" << endl
+                     << "2. Parcel ID" << endl
                      << "Your input: ";
                 cin >> input;
 
@@ -370,7 +370,6 @@ void updateParcel(Parcel** head){
 void autoFill(Parcel** head){
     string id = "SPXMY000";
     string phone = "018-000";
-
     Parcel* n = *head;
 
     do{
