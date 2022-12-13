@@ -194,12 +194,12 @@ void depositParcel(Parcel** head)
 
         if (validator.isValid(phone))
         {
-            cout << "Valid Malaysian phone number" << endl;
+            cout << "Valid Malaysian phone number\n" << endl;
             break;
         }
         else
         {
-            cout << "Invalid Malaysian phone number" << endl;
+            cout << "Invalid Malaysian phone number\n" << endl;
         }
     } while(true);
     
@@ -237,29 +237,27 @@ void retrieveParcel(Parcel **head)
     // local var, ptr, obj init
     string phone;
     Parcel* n = *head;
-    int pin;
+    int pin, attempt = 3;
     PhoneValidator validator;
-    int attempt = 3;
+
+    cin.ignore();
 
     // do...while phone no. is invalid
     // ! input validation for phone
     do
     {
-        cin.ignore();
-
         // user input for phone
         cout << "Insert Phone Number (example : +6013456789): ";
         getline(cin, phone);
 
         if (validator.isValid(phone))
         {
-            cout << "Valid Malaysian phone number" << endl;
+            cout << "Valid Malaysian phone number\n" << endl;
             break;
         }
         else
         {
-            cout << "Invalid Malaysian phone number" << endl;
-            
+            cout << "Invalid Malaysian phone number\n" << endl;
         }
     } while(true);
 
@@ -271,7 +269,9 @@ void retrieveParcel(Parcel **head)
         // if input match current node's phone
         if(n->phone == phone)
         {
-            while(attempt != 0){
+            // while... attempt is not 0
+            while(attempt != 0)
+            {
                 // user input for pin
                 cout << "Enter the pin for locker " << n->locker_id <<" : ";
                 cin >> pin;
@@ -282,8 +282,9 @@ void retrieveParcel(Parcel **head)
                     cout << "Wrong pin!" << endl;
                     cout << "You got " << --attempt << " attempt(s) left!" << endl;
 
-                    if(attempt==0){
-                        cout << "Reach max attempt!" << endl;
+                    if(attempt == 0)
+                    {
+                        cout << "Reached max attempt!" << endl;
                         return;
                     }
                 }
@@ -379,23 +380,23 @@ void find_parcel(Parcel* n)
     {
         // find using phone no.
         case 1:
+            cin.ignore();
+
             // do...while phone no. is invalid
             do
             {
-                cin.ignore();
-        
                 // user input for string_input - phone
                 cout << "Insert Phone Number (example : +6013456789): ";
                 getline(cin, string_input);
 
                 if (validator.isValid(string_input))
                 {
-                    cout << "Valid Malaysian phone number" << endl;
+                    cout << "Valid Malaysian phone number\n" << endl;
                     break;
                 }
                 else
                 {
-                    cout << "Invalid Malaysian phone number" << endl;
+                    cout << "Invalid Malaysian phone number\n" << endl;
                 }
             } while(true);
 
@@ -480,23 +481,23 @@ void updateParcel(Parcel** head)
     {
         // find using phone no.
         case 1:
+            cin.ignore();
+
             // do...while phone no. is invalid
             do
             {
-                cin.ignore();
-        
                 // user input for string_input - phone
                 cout << "Insert Phone Number (example : +6013456789): ";
                 getline(cin, string_input);
 
                 if (validator.isValid(string_input))
                 {
-                    cout << "Valid Malaysian phone number" << endl;
+                    cout << "Valid Malaysian phone number\n" << endl;
                     break;
                 }
                 else
                 {
-                    cout << "Invalid Malaysian phone number" << endl;
+                    cout << "Invalid Malaysian phone number\n" << endl;
                 }
             } while(true);
 
@@ -526,23 +527,23 @@ void updateParcel(Parcel** head)
                     {
                         // edit phone no.
                         case 1:
+                            cin.ignore();
+
                             // do...while phone no. is invalid
                             do
                             {
-                                cin.ignore();
-        
                                 // user input for string_input - phone
                                 cout << "Insert Phone Number (example : +6013456789): ";
                                 getline(cin, string_input);
 
                                 if (validator.isValid(string_input))
                                 {
-                                    cout << "Valid Malaysian phone number" << endl;
+                                    cout << "Valid Malaysian phone number\n" << endl;
                                     break;
                                 }
                                 else
                                 {
-                                    cout << "Invalid Malaysian phone number" << endl;
+                                    cout << "Invalid Malaysian phone number\n" << endl;
                                 }
                             } while(true);
                             
@@ -607,6 +608,8 @@ void updateParcel(Parcel** head)
                     {
                         // edit phone no.
                         case 1:
+                            cin.ignore();
+
                             // do...while phone no. is invalid
                             do
                             {
@@ -616,12 +619,12 @@ void updateParcel(Parcel** head)
 
                                 if (validator.isValid(string_input))
                                 {
-                                    cout << "Valid Malaysian phone number" << endl;
+                                    cout << "Valid Malaysian phone number\n" << endl;
                                     break;
                                 }
                                 else
                                 {
-                                    cout << "Invalid Malaysian phone number" << endl;
+                                    cout << "Invalid Malaysian phone number\n" << endl;
                                 }
                             } while(true);
 
