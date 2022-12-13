@@ -655,14 +655,14 @@ void updateParcel(Parcel** head)
 void autoFill(Parcel** head)
 {
     // local var, ptr init
-    string id[5] = {"SPXMY000","SPE000","TSXMY000","POPMY000","HUIMY000,000000,PL000, MY0000, DHLMY000"};
+    string id[9] = {"SPXMY000","SPE000","TSXMY000","POPMY000","HUIMY000", "000000", "PL000", "MY0000", "DHLMY000"};
     string phone = "+6018010";
     Parcel* n = *head;
 
     // do... while n iterate to end of list
     do
     {
-        string new_id = id[pinGenerator(0,5)]+to_string(pinGenerator(1000,8999));
+        string new_id = id[pinGenerator(0,8)]+to_string(pinGenerator(1000,8999));
         string new_phone = phone+to_string(pinGenerator(1000,8999));
 
         //core part
