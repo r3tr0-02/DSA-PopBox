@@ -239,6 +239,7 @@ void retrieveParcel(Parcel **head)
     Parcel* n = *head;
     int pin;
     PhoneValidator validator;
+    int attempt = 3;
 
     // do...while phone no. is invalid
     // ! input validation for phone
@@ -258,6 +259,7 @@ void retrieveParcel(Parcel **head)
         else
         {
             cout << "Invalid Malaysian phone number" << endl;
+            
         }
     } while(true);
 
@@ -265,9 +267,11 @@ void retrieveParcel(Parcel **head)
     // while... n iterate to end of list
     while(n != NULL)
     {
+      
         // if input match current node's phone
         if(n->phone == phone)
         {
+          do{//help?
             // user input for pin
             cout << "Enter the pin for locker " << n->locker_id <<" : ";
             cin >> pin;
@@ -276,6 +280,8 @@ void retrieveParcel(Parcel **head)
             if(pin != n->pin)
             {
                 cout << "Wrong pin!" << endl;
+                attempt--;
+                cout << "You got " << attempt << " attempt(s) left!" << endl;
             }
             // else cont. retrieve parcel, reset node to default val
             else
@@ -284,8 +290,10 @@ void retrieveParcel(Parcel **head)
                 n->parcel_id = "";
                 n->phone = "";
                 n->pin = 0;
+                break;
             }
-            break;
+            
+          }while(attempt != 0);
         }
         else
         {
@@ -299,7 +307,6 @@ void retrieveParcel(Parcel **head)
         cout << "Phone number doesn't exist!" << endl;
     }
 }
-
 // displaySingleLocker() funct.
 // ? dev funct.
 void displaySingleLocker(Parcel *n)
