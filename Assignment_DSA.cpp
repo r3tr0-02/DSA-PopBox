@@ -271,29 +271,32 @@ void retrieveParcel(Parcel **head)
         // if input match current node's phone
         if(n->phone == phone)
         {
-          do{//help?
-            // user input for pin
-            cout << "Enter the pin for locker " << n->locker_id <<" : ";
-            cin >> pin;
+            while(attempt != 0){
+                // user input for pin
+                cout << "Enter the pin for locker " << n->locker_id <<" : ";
+                cin >> pin;
 
-            // if input not match current node's pin
-            if(pin != n->pin)
-            {
-                cout << "Wrong pin!" << endl;
-                attempt--;
-                cout << "You got " << attempt << " attempt(s) left!" << endl;
+                // if input not match current node's pin
+                if(pin != n->pin)
+                {
+                    cout << "Wrong pin!" << endl;
+                    cout << "You got " << --attempt << " attempt(s) left!" << endl;
+
+                    if(attempt==0){
+                        cout << "Reach max attempt!" << endl;
+                        return;
+                    }
+                }
+                // else cont. retrieve parcel, reset node to default val
+                else
+                {
+                    cout << "Pin correct! Please remove the parcel from the locker." << endl;
+                    n->parcel_id = "";
+                    n->phone = "";
+                    n->pin = 0;
+                    return;
+                }
             }
-            // else cont. retrieve parcel, reset node to default val
-            else
-            {
-                cout << "Pin correct! Please remove the parcel from the locker." << endl;
-                n->parcel_id = "";
-                n->phone = "";
-                n->pin = 0;
-                break;
-            }
-            
-          }while(attempt != 0);
         }
         else
         {
@@ -775,6 +778,9 @@ int main()
                 cout << "Wrong number" << endl << endl;
                 break;
         }
+        
+        cout << "Press ENTER to continue..." << endl;
+        cin.ignore();
         
     } while (input != 0);
 
