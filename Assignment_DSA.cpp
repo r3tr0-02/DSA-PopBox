@@ -27,7 +27,7 @@ using namespace std;
     // : Create Linked List with 25 nodes
     // : Struct{Box Number(int), Parcel ID(string), Phone Number(string), PIN number(int), Next(*pointer)}
     // : Random Number Generator for PIN 
-    TODO : Input validation for phone and pin inputs
+    // : Input validation for phone and pin inputs
 
     <1. DEPOSIT PARCEL>
     // : When add parcel, system check from 1 until 25. If empty, fill that node. If reach NULL, terminate insertion.
@@ -177,7 +177,7 @@ int pinGenerator(int min,int max)
 void depositParcel(Parcel** head)
 {
     // local var and obj init
-    string id,phone;
+    string id, phone;
     PhoneValidator validator;
     
     // user input for id
@@ -188,6 +188,7 @@ void depositParcel(Parcel** head)
     // do...while phone no. is invalid
     do
     {
+        // user input for phone
         cout << "Insert Phone Number (example : +6013456789): ";
         getline(cin, phone);
 
@@ -231,28 +232,52 @@ void depositParcel(Parcel** head)
 }
 
 // retrieveParcel() funct.
-// ! Phone, Pin validation is not complete
 void retrieveParcel(Parcel **head)
 {
-    // local var, ptr init
+    // local var, ptr, obj init
     string phone;
     Parcel* n = *head;
     int pin;
+    PhoneValidator validator;
 
-    cout << "Insert Phone Number (example : +6013456789): ";
-    cin >> phone;
+    // do...while phone no. is invalid
+    // ! input validation for phone
+    do
+    {
+        cin.ignore();
 
+        // user input for phone
+        cout << "Insert Phone Number (example : +6013456789): ";
+        getline(cin, phone);
+
+        if (validator.isValid(phone))
+        {
+            cout << "Valid Malaysian phone number" << endl;
+            break;
+        }
+        else
+        {
+            cout << "Invalid Malaysian phone number" << endl;
+        }
+    } while(true);
+
+    // if phone no. valid goto here
+    // while... n iterate to end of list
     while(n != NULL)
     {
+        // if input match current node's phone
         if(n->phone == phone)
         {
+            // user input for pin
             cout << "Enter the pin for locker " << n->locker_id <<" : ";
             cin >> pin;
 
+            // if input not match current node's pin
             if(pin != n->pin)
             {
                 cout << "Wrong pin!" << endl;
             }
+            // else cont. retrieve parcel, reset node to default val
             else
             {
                 cout << "Pin correct! Please remove the parcel from the locker." << endl;
@@ -268,6 +293,7 @@ void retrieveParcel(Parcel **head)
         }
     }
 
+    // if n is at end of list
     if(n == NULL)
     {
         cout << "Phone number doesn't exist!" << endl;
@@ -275,6 +301,7 @@ void retrieveParcel(Parcel **head)
 }
 
 // displaySingleLocker() funct.
+// ? dev funct.
 void displaySingleLocker(Parcel *n)
 {
     cout
@@ -322,13 +349,13 @@ void displayAllLockerEx(Parcel* n)
 }
 
 // find_parcel() funct.
-// ! Phone validation is not complete
 // ? dev. funct.
 void find_parcel(Parcel* n)
 {
-    // local var init.
+    // local var, obj init.
     int input;
     string string_input;
+    PhoneValidator validator;
 
     // user input for input
     cout << "\nFind parcel using?" << endl
@@ -340,11 +367,29 @@ void find_parcel(Parcel* n)
     // switch... case input
     switch (input)
     {
+        // find using phone no.
         case 1:
-            // user input for string_input
-            cout << "\nInsert Phone Number (example : +60123456789) : ";
-            cin >> string_input; 
+            // do...while phone no. is invalid
+            do
+            {
+                cin.ignore();
+        
+                // user input for string_input - phone
+                cout << "Insert Phone Number (example : +6013456789): ";
+                getline(cin, string_input);
 
+                if (validator.isValid(string_input))
+                {
+                    cout << "Valid Malaysian phone number" << endl;
+                    break;
+                }
+                else
+                {
+                    cout << "Invalid Malaysian phone number" << endl;
+                }
+            } while(true);
+
+            // if phone no. valid goto here
             // while... n iterate to end
             while(n != NULL)
             {
@@ -368,6 +413,7 @@ void find_parcel(Parcel* n)
             }
             break;
 
+        // find using parcel id
         case 2:
             // user input for string_input
             cout << "\nInsert Parcel ID : ";
@@ -403,7 +449,6 @@ void find_parcel(Parcel* n)
 }
 
 // updateParcel() funct.
-// ! Phone validation is not complete
 // ? dev funct.
 void updateParcel(Parcel** head)
 {
@@ -411,6 +456,7 @@ void updateParcel(Parcel** head)
     int input;
     string string_input;
     Parcel* n = *head;
+    PhoneValidator validator;
 
     // user input for input
     cout << "\nMethod to find parcel" << endl
@@ -422,11 +468,29 @@ void updateParcel(Parcel** head)
     // switch... case input
     switch (input)
     {
+        // find using phone no.
         case 1:
-            // user input for string_input
-            cout << "\nInsert Phone Number (example : +60123456789): ";
-            cin >> string_input;
+            // do...while phone no. is invalid
+            do
+            {
+                cin.ignore();
+        
+                // user input for string_input - phone
+                cout << "Insert Phone Number (example : +6013456789): ";
+                getline(cin, string_input);
 
+                if (validator.isValid(string_input))
+                {
+                    cout << "Valid Malaysian phone number" << endl;
+                    break;
+                }
+                else
+                {
+                    cout << "Invalid Malaysian phone number" << endl;
+                }
+            } while(true);
+
+            // if phone no. valid goto here
             // while... n iterate to end of list
             while(n != NULL)
             {
@@ -450,17 +514,34 @@ void updateParcel(Parcel** head)
                     // switch... case input
                     switch(input)
                     {
-                        // ! Phone validation here
+                        // edit phone no.
                         case 1:
-                            // user input for string_input
-                            cout << "\nInsert New Phone Number (example : +60123456789): ";
-                            cin >> string_input;
+                            // do...while phone no. is invalid
+                            do
+                            {
+                                cin.ignore();
+        
+                                // user input for string_input - phone
+                                cout << "Insert Phone Number (example : +6013456789): ";
+                                getline(cin, string_input);
+
+                                if (validator.isValid(string_input))
+                                {
+                                    cout << "Valid Malaysian phone number" << endl;
+                                    break;
+                                }
+                                else
+                                {
+                                    cout << "Invalid Malaysian phone number" << endl;
+                                }
+                            } while(true);
                             
                             n->phone = string_input;
 
                             cout << "\nPhone Number updated!";
                             break;
 
+                        // edit parcel id
                         case 2:
                             // user input for string_input
                             cout << "\nInsert New Parcel ID: ";
@@ -485,6 +566,7 @@ void updateParcel(Parcel** head)
 
             break;
 
+        // find using parcel id
         case 2:
             // user input for string_input
             cout << "\nInsert Parcel ID : ";
@@ -513,17 +595,33 @@ void updateParcel(Parcel** head)
                     // switch... case input
                     switch(input)
                     {
-                        // ! Phone validation here
+                        // edit phone no.
                         case 1:
-                            // user input for string_input
-                            cout << "\nInsert New Phone Number (example : +60123456789): ";
-                            cin >> string_input;
+                            // do...while phone no. is invalid
+                            do
+                            {
+                                // user input for string_input - phone
+                                cout << "Insert Phone Number (example : +6013456789): ";
+                                getline(cin, string_input);
 
+                                if (validator.isValid(string_input))
+                                {
+                                    cout << "Valid Malaysian phone number" << endl;
+                                    break;
+                                }
+                                else
+                                {
+                                    cout << "Invalid Malaysian phone number" << endl;
+                                }
+                            } while(true);
+
+                            // if phone no. valid goto here
                             n->phone = string_input;
 
                             cout << "\nPhone Number updated!";
                             break;
 
+                        // edit parcel id
                         case 2:
                             // user input for string_input
                             cout << "\nInsert New Parcel ID: ";
