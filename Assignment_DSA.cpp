@@ -26,7 +26,7 @@ using namespace std;
     <0. SYSTEM>
     // : Create Linked List with 25 nodes
     // : Struct{Box Number(int), Parcel ID(string), Phone Number(string), PIN number(int), Next(*pointer)}
-    // : Random Number Generator for PIN
+    // : Random Number Generator for PIN 
     // : Input validation for phone and pin inputs
 
     <1. DEPOSIT PARCEL>
@@ -172,13 +172,13 @@ int pinGenerator(int min,int max)
     return min+rand()%max;
 }
 
-// depositParcel() funct. -
+// depositParcel() funct. - 
 void depositParcel(Parcel** head)
 {
     // local var and obj init
     string id, phone;
     PhoneValidator validator;
-
+    
     // user input for id
     cout << "Insert Parcel ID : ";
     cin >> id;
@@ -193,15 +193,15 @@ void depositParcel(Parcel** head)
 
         if (validator.isValid(phone))
         {
-            cout << "Valid Malaysian Phone Number" << endl << endl;
+            cout << "Valid Malaysian phone number\n" << endl;
             break;
         }
         else
         {
-            cout << "Invalid Malaysian Phone Number, Please Enter Again!" << endl << endl;
+            cout << "Invalid Malaysian phone number, Please Enter Again!\n" << endl;
         }
     } while(true);
-
+    
     // if phone no valid goto here
     Parcel* n = *head;
 
@@ -214,7 +214,7 @@ void depositParcel(Parcel** head)
             n->phone = phone;
             n->pin = pinGenerator(1000,8999);
             cout << "Parcel successfully deposit to locker "<< n->locker_id <<"!"<<endl;
-            cout << "Locker pin : " << n->pin << endl;
+            cout << "Locker pin : " << n->pin << endl;        
             break;
         }
         else
@@ -236,28 +236,27 @@ void retrieveParcel(Parcel **head)
     // local var, ptr, obj init
     string phone;
     Parcel* n = *head;
-    int pin;
+    int pin, attempt = 3;
     PhoneValidator validator;
-    int attempt = 3;
+
+    cin.ignore();
 
     // do...while phone no. is invalid
     // ! input validation for phone
     do
     {
-        cin.ignore();
-
         // user input for phone
         cout << "Insert Phone Number (example : +6013456789): ";
         getline(cin, phone);
 
-         if (validator.isValid(phone))
+        if (validator.isValid(phone))
         {
-            cout << "Valid Malaysian Phone Number" << endl << endl;
+            cout << "Valid Malaysian phone number\n" << endl;
             break;
         }
         else
         {
-            cout << "Invalid Malaysian Phone Number, Please Enter Again!" << endl << endl;
+            cout << "Invalid Malaysian phone number, Please Enter Again!\n" << endl;
         }
     } while(true);
 
@@ -265,11 +264,13 @@ void retrieveParcel(Parcel **head)
     // while... n iterate to end of list
     while(n != NULL)
     {
-
+      
         // if input match current node's phone
         if(n->phone == phone)
         {
-            while(attempt != 0){
+            // while... attempt is not 0
+            while(attempt != 0)
+            {
                 // user input for pin
                 cout << "Enter the pin for locker " << n->locker_id <<" : ";
                 cin >> pin;
@@ -277,12 +278,12 @@ void retrieveParcel(Parcel **head)
                 // if input not match current node's pin
                 if(pin != n->pin)
                 {
-                    cerr << "Wrong pin!" << endl;
-                    cerr << "You got " << --attempt << " attempt(s) left!" << endl << endl;
+                    cout << "Wrong pin!" << endl;
+                    cout << "You got " << --attempt << " attempt(s) left!" << endl;
 
-                    if(attempt==0){
-                        cout << "Reach max attempt!" << endl;
-                        cin.ignore();
+                    if(attempt == 0)
+                    {
+                        cout << "Reached max attempt!" << endl;
                         return;
                     }
                 }
@@ -309,6 +310,7 @@ void retrieveParcel(Parcel **head)
         cout << "Phone number doesn't exist!" << endl;
     }
 }
+
 // displaySingleLocker() funct.
 // ? dev funct.
 void displaySingleLocker(Parcel *n)
@@ -333,8 +335,7 @@ void displayAllLocker(Parcel* n)
         displaySingleLocker(n);
         n = n->next;
     }
-    cout << "==========END OF LOCKER==========" << endl;
-
+    cout << "\n=====END OF LOCKER=====" << endl;
 }
 
 // displayAllLockerEx() funct.
@@ -355,7 +356,7 @@ void displayAllLockerEx(Parcel* n)
             n = n->next;
         }
     }
-    cout << "==========END OF LOCKER==========" << endl;
+    cout << "\n=====END OF LOCKER=====" << endl;
 }
 
 // find_parcel() funct.
@@ -379,27 +380,23 @@ void find_parcel(Parcel* n)
     {
         // find using phone no.
         case 1:
+            cin.ignore();
+
             // do...while phone no. is invalid
             do
             {
-                cin.ignore();
-
                 // user input for string_input - phone
-                cout << "Insert Phone Number (example : +6013456789)(Insert 0 to cancel): ";
+                cout << "Insert Phone Number (example : +6013456789): ";
                 getline(cin, string_input);
-
-                if(string_input=="0"){
-                    return;
-                }
 
                 if (validator.isValid(string_input))
                 {
-                    cout << "Valid Malaysian Phone Number" << endl << endl;
+                    cout << "Valid Malaysian phone number\n" << endl;
                     break;
                 }
                 else
                 {
-                    cout << "Invalid Malaysian Phone Number, Please Enter Again!" << endl << endl;
+                    cout << "Invalid Malaysian phone number, Please Enter Again!\n" << endl;
                 }
             } while(true);
 
@@ -431,7 +428,7 @@ void find_parcel(Parcel* n)
         case 2:
             // user input for string_input
             cout << "\nInsert Parcel ID : ";
-            cin >> string_input;
+            cin >> string_input; 
 
             // while... n iterate to end of list
             while(n != NULL)
@@ -484,24 +481,24 @@ void updateParcel(Parcel** head)
     {
         // find using phone no.
         case 1:
+            cin.ignore();
+
             // do...while phone no. is invalid
             do
             {
-                cin.ignore();
-
                 // user input for string_input - phone
                 cout << "Insert Phone Number (example : +6013456789): ";
                 getline(cin, string_input);
 
                 if (validator.isValid(string_input))
-                    {
-                        cout << "Valid Malaysian Phone Number" << endl << endl;
-                        break;
-                    }
-                    else
-                    {
-                        cout << "Invalid Malaysian Phone Number, Please Enter Again!" << endl << endl;
-                    }
+                {
+                    cout << "Valid Malaysian phone number\n" << endl;
+                    break;
+                }
+                else
+                {
+                    cout << "Invalid Malaysian phone number, Please Enter Again!\n" << endl;
+                }
             } while(true);
 
             // if phone no. valid goto here
@@ -530,30 +527,29 @@ void updateParcel(Parcel** head)
                     {
                         // edit phone no.
                         case 1:
+                            cin.ignore();
+
                             // do...while phone no. is invalid
                             do
                             {
-                                cin.ignore();
-
                                 // user input for string_input - phone
                                 cout << "Insert New Phone Number (example : +6013456789): ";
                                 getline(cin, string_input);
 
                                 if (validator.isValid(string_input))
                                 {
-                                    cout << "Valid Malaysian Phone Number" << endl << endl;
+                                    cout << "Valid Malaysian phone number\n" << endl;
                                     break;
                                 }
                                 else
                                 {
-                                    cout << "Invalid Malaysian Phone Number, Please Enter Again!" << endl << endl;
+                                    cout << "Invalid Malaysian phone number, Please Enter Again!\n" << endl;
                                 }
                             } while(true);
-
+                            
                             n->phone = string_input;
 
-                            cout << "\nPhone Number updated!"<<endl;
-                            cin.ignore();
+                            cout << "\nPhone Number updated!" << endl;
                             break;
 
                         // edit parcel id
@@ -614,6 +610,8 @@ void updateParcel(Parcel** head)
                     {
                         // edit phone no.
                         case 1:
+                            cin.ignore();
+
                             // do...while phone no. is invalid
                             do
                             {
@@ -623,12 +621,12 @@ void updateParcel(Parcel** head)
 
                                 if (validator.isValid(string_input))
                                 {
-                                    cout << "Valid Malaysian Phone Number" << endl << endl;
+                                    cout << "Valid Malaysian phone number\n" << endl;
                                     break;
                                 }
                                 else
                                 {
-                                    cout << "Invalid Malaysian Phone Number, Please Enter Again!" << endl << endl;
+                                    cout << "Invalid Malaysian phone number, Please Enter Again!\n" << endl;
                                 }
                             } while(true);
 
@@ -672,8 +670,9 @@ void updateParcel(Parcel** head)
 }
 
 // autoFill() funct.
-/* dev. funct.
-void autoFill(Parcel** head)
+// ? dev. funct.
+// ! This funct. is removed for v3.4.1
+/*void autoFill(Parcel** head)
 {
     // local var, ptr init
     string id[9] = {"SPXMY000","SPE000","TSXMY000","POPMY000","HUIMY000", "000000", "PL000", "MY0000", "DHLMY000"};
@@ -709,13 +708,12 @@ void autoFill(Parcel** head)
     {
         cout << "\n!!!!!!!!!!Auto Fill Complete!!!!!!!!!!" << endl;
     }
-}
-*/
+}*/
 
 // * main() funct.
 int main()
 {
-    // local var, ptr, obj init
+    // local var, ptr, obj init  
     Parcel *cendi_head = NULL,*cendi_tail = NULL;
     createLocker(&cendi_head,&cendi_tail,0);
     int input;
@@ -755,10 +753,10 @@ int main()
                 cout << "\n2. Show all locker (excluding empty)";
                 cout << "\n3. Find parcel";
                 cout << "\n4. Update parcel information";
-                //cout << "\n9. Random Generate all Locker Information";
+                // cout << "\n9. Random Generate all Locker Information";
                 cout << "\nYour input: ";
                 cin >> input;
-                cin.ignore();
+
                 // switch... case input
                 switch(input)
                 {
@@ -774,9 +772,9 @@ int main()
                     case 4:
                         updateParcel(&cendi_head);
                         break;
-                    /*case 9:
-                        autoFill(&cendi_head);
-                        break;*/
+                    // case 9:
+                    //     autoFill(&cendi_head);
+                    //     break;
                     default:
                         cout << "Wrong number" << endl << endl;
                         break;
