@@ -32,7 +32,6 @@ using namespace std;
     <1. DEPOSIT PARCEL>
     // : When add parcel, system check from 1 until 25. If empty, fill that node. If reach NULL, terminate insertion.
     // : Get input -> Parcel ID, Phone Number
-    TODO : If add parcel success, "notify" the owner of parcel
 
     <2.RETRIEVE PARCEL>
     // : When retrieve parcel, choose the box number
@@ -311,6 +310,7 @@ void retrieveParcel(Parcel **head)
         cout << "Phone number doesn't exist!" << endl;
     }
 }
+
 // displaySingleLocker() funct.
 // ? dev funct.
 void displaySingleLocker(Parcel *n)
@@ -665,7 +665,8 @@ void updateParcel(Parcel** head)
 
 // autoFill() funct.
 // ? dev. funct.
-void autoFill(Parcel** head)
+// ! This funct. is removed for v3.4.1
+/*void autoFill(Parcel** head)
 {
     // local var, ptr init
     string id[9] = {"SPXMY000","SPE000","TSXMY000","POPMY000","HUIMY000", "000000", "PL000", "MY0000", "DHLMY000"};
@@ -701,7 +702,7 @@ void autoFill(Parcel** head)
     {
         cout << "\n!!!!!!!!!!Auto Fill Complete!!!!!!!!!!" << endl;
     }
-}
+}*/
 
 // * main() funct.
 int main()
@@ -746,7 +747,7 @@ int main()
                 cout << "\n2. Show all locker (excluding empty)";
                 cout << "\n3. Find parcel";
                 cout << "\n4. Update parcel information";
-                cout << "\n9. Random Generate all Locker Information";
+                // cout << "\n9. Random Generate all Locker Information";
                 cout << "\nYour input: ";
                 cin >> input;
 
@@ -765,9 +766,9 @@ int main()
                     case 4:
                         updateParcel(&cendi_head);
                         break;
-                    case 9:
-                        autoFill(&cendi_head);
-                        break;
+                    // case 9:
+                    //     autoFill(&cendi_head);
+                    //     break;
                     default:
                         cout << "Wrong number" << endl << endl;
                         break;
